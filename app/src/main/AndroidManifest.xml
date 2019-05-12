@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".ImageService"
+            android:icon="@drawable/ic_launcher_background"
+            android:lable="ImageService"
+            >
+        </service>
     </application>
 
 </manifest>
