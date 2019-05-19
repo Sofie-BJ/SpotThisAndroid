@@ -5,11 +5,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.spotthis.Database.AppDatabase;
+import com.example.spotthis.Models.Image;
 import com.example.spotthis.helper.ImageHelper;
 
 import java.util.List;
@@ -27,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         database = AppDatabase.getAppDatabase(this);
         imageView = (ImageView) findViewById(R.id.imageViewDb);
+    }
+
+    public void categoryView(View view) {
+        Intent intent;
+        intent = new Intent(this, com.example.spotthis.ImageActivity.class);
+        startActivity(intent);
     }
 
     public void selectImage(View view){

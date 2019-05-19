@@ -1,10 +1,12 @@
-package com.example.spotthis;
+package com.example.spotthis.Database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
+
+import com.example.spotthis.Models.Image;
 
 @Database(entities = {Image.class}, version = 1)
 @TypeConverters(Converters.class)

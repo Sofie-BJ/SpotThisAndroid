@@ -1,10 +1,11 @@
-package com.example.spotthis;
+package com.example.spotthis.Database;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import java.util.ArrayList;
+import com.example.spotthis.Models.Image;
+
 import java.util.List;
 
 @Dao

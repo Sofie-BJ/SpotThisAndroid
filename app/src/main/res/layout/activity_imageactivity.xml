@@ -7,4 +7,5 @@
     android:id="@+id/recycler_view"
     android:padding="16dp"
     tools:listitem="@layout/recycler_view_item">
+
 </android.support.v7.widget.RecyclerView>

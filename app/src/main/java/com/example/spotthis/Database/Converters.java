@@ -1,4 +1,4 @@
-package com.example.spotthis;
+package com.example.spotthis.Database;
 
 import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;

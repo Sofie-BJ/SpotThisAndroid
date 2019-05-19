@@ -4,6 +4,9 @@ import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.example.spotthis.Database.AppDatabase;
+import com.example.spotthis.Models.Image;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
