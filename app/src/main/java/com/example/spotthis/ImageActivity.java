@@ -30,13 +30,13 @@ public class ImageActivity extends AppCompatActivity {
         database = AppDatabase.getAppDatabase(this);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+
         try {
             CategoryViewAdapter adapter = new CategoryViewAdapter(new CategoryAsyncTask().execute().get());
+            recyclerView.setAdapter(adapter);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
