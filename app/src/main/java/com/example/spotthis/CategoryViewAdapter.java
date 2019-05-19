@@ -1,5 +1,6 @@
 package com.example.spotthis;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -19,23 +20,34 @@ import java.util.List;
 public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapter.CategoryViewHolder> {
 
     List<Category> categories;
+    Context context;
 
-    CategoryViewAdapter(List<Category> categories) {
+    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
+
+        TextView categoryName;
+
+        public CategoryViewHolder(View itemView) {
+            super(itemView);
+            categoryName = itemView.findViewById(R.id.category_name);
+        }
+    }
+
+    CategoryViewAdapter(List<Category> categories, Context context) {
         this.categories = categories;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view, viewGroup, true);
-        CategoryViewHolder categoryViewHolder = new CategoryViewHolder(view);
-        return categoryViewHolder;
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view, viewGroup, false);
+        CategoryViewHolder viewHolder = new CategoryViewHolder(view);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder categoryViewHolder, int i) {
-        Category category = categories.get(i);
-        categoryViewHolder.categoryName.setText(category.getCategoryname());
+        categoryViewHolder.categoryName.setText(categories.get(i).getCategoryname());
     }
 
     @Override
@@ -48,28 +60,4 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
         return categories.size();
     }
 
-    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
-
-        View view;
-        CardView cardView;
-        TextView categoryName;
-
-        public CategoryViewHolder(View itemView) {
-            super(itemView);
-            view = itemView;
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                //    intent.putExtra(Intent.EXTRA_TEXT, )
-                }
-            });
-            cardView = (CardView) itemView.findViewById(R.id.cardView);
-            categoryName = (TextView) itemView.findViewById(R.id.category_name);
-
-
-
-        }
-    }
 }

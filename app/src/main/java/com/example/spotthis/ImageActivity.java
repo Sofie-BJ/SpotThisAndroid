@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.LinearLayout;
 
 
 import com.example.spotthis.Database.AppDatabase;
@@ -21,6 +22,7 @@ public class ImageActivity extends AppCompatActivity {
 
     private List<Category> categories;
     private AppDatabase database;
+    private RecyclerView recyclerView;
     private DatabaseUtilityHelper databaseUtilityHelper = new DatabaseUtilityHelper();
 
     @Override
@@ -29,14 +31,17 @@ public class ImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_imageactivity);
         database = AppDatabase.getAppDatabase(this);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
 
+        recyclerView.setLayoutManager(llm);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
         try {
-            CategoryViewAdapter adapter = new CategoryViewAdapter(new CategoryAsyncTask().execute().get());
+            categories = new CategoryAsyncTask().execute().get();
+            CategoryViewAdapter adapter = new CategoryViewAdapter(categories, this);
+            recyclerView.setAdapter(adapter);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
