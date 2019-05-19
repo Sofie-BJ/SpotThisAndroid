@@ -4,10 +4,11 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity(tableName = "image")
-public class Image {
+public class Image implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int uid;

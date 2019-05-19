@@ -1,8 +1,12 @@
 package com.example.spotthis.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Category {
+public class Category implements Serializable {
 
     private String categoryname;
     private List<Image> categoryimages;
@@ -19,4 +23,6 @@ public class Category {
     public List<Image> getCategoryimages() {
         return categoryimages;
     }
+
+
 }
