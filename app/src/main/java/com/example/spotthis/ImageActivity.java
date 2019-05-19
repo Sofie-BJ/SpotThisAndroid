@@ -31,7 +31,7 @@ public class ImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_imageactivity);
         database = AppDatabase.getAppDatabase(this);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -42,6 +42,7 @@ public class ImageActivity extends AppCompatActivity {
             categories = new CategoryAsyncTask().execute().get();
             CategoryViewAdapter adapter = new CategoryViewAdapter(categories, this);
             recyclerView.setAdapter(adapter);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
