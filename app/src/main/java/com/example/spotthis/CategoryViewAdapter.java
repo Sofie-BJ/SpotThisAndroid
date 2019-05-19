@@ -38,7 +38,7 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
         public CategoryViewHolder(View itemView) {
             super(itemView);
-            parentLayout = itemView.findViewById(R.id.parentlayout);
+            parentLayout = itemView.findViewById(R.id.parent_layout);
             categoryName = itemView.findViewById(R.id.category_name);
         }
     }

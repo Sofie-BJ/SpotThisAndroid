@@ -36,6 +36,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name="com.example.spotthis.CategoryImagesActivity"
+            android:label="Category image" />
+
+        <activity
             android:name=".MainActivity"
             android:label="SpotThis"
             android:theme="@style/AppTheme.NoActionBar">
