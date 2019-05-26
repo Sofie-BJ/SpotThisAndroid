@@ -182,7 +182,7 @@ public class CategoriesActivity extends AppCompatActivity {
             imageViewModel.insert(image);
         }
 
-        if (resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             Intent intent = new Intent(this.getApplicationContext(), AnalyzeActivity.class);
             if (mUriPhotoTaken != null) {
                 intent.putExtra("URI", mUriPhotoTaken.toString());

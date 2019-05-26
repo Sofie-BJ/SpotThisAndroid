@@ -154,7 +154,7 @@ public class AnalyzeActivity extends AppCompatActivity {
                 caption = analysisResult.description.tags.get(0);
                 publishProgress(caption);
                 for (Tag tag : analysisResult.tags) {
-                    if (tag.confidence > 0.85) {
+                    if (tag.confidence > 0.90) {
                         publishProgress(tag.name);
                         categories.add(tag.name);
                     }
@@ -163,7 +163,6 @@ public class AnalyzeActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra("IMAGE",image);
                 setResult(RESULT_OK,intent);
-                finish();
             }
             return null;
         }
