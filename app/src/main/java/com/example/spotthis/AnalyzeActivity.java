@@ -39,12 +39,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.spotthis.Database.AppDatabase;
 import com.example.spotthis.Models.Image;
@@ -57,7 +54,6 @@ import com.microsoft.projectoxford.vision.contract.Tag;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +71,7 @@ public class AnalyzeActivity extends AppCompatActivity {
     private ImageView imageView;
 
     // The edit to show status and result.
-    private EditText mEditText;
+    private TextView textView;
 
     private VisionServiceClient client;
 
@@ -92,7 +88,7 @@ public class AnalyzeActivity extends AppCompatActivity {
         database = AppDatabase.getAppDatabase(this);
 
         imageView = findViewById(R.id.selectedImage);
-        mEditText = (EditText) findViewById(R.id.editTextResult);
+        textView = findViewById(R.id.editTextResult);
 
         Intent intent = getIntent();
         String uriString = intent.getStringExtra("URI");
@@ -109,12 +105,12 @@ public class AnalyzeActivity extends AppCompatActivity {
 
 
     public void doAnalyze(String imageuri) {
-        mEditText.setText("Analyzing...");
+        textView.setText("Analyzing...");
 
         try {
             new doRequest(imageuri).execute();
         } catch (Exception e) {
-            mEditText.setText("Error encountered. Exception is: " + e.toString());
+            textView.setText("Error encountered. Exception is: " + e.toString());
         }
     }
 
@@ -173,7 +169,7 @@ public class AnalyzeActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(String... values) {
             if(!isCancelled()){
-                mEditText.append(values[0] + "\n");
+                textView.append(values[0] + "\n");
             }
             super.onProgressUpdate(values);
         }

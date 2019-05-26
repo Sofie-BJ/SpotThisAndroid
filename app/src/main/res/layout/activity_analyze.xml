@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic[11]" />
 
-    <EditText
+    <TextView
         android:id="@+id/editTextResult"
         android:layout_width="365dp"
         android:layout_height="269dp"
