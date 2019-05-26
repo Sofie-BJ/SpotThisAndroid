@@ -44,6 +44,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.spotthis.Database.AppDatabase;
+import com.example.spotthis.Database.ImageRepository;
 import com.example.spotthis.Models.Image;
 import com.example.spotthis.helper.ImageHelper;
 import com.google.gson.Gson;
@@ -75,7 +76,7 @@ public class AnalyzeActivity extends AppCompatActivity {
 
     private VisionServiceClient client;
 
-    private AppDatabase database;
+    private ImageRepository imageRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,7 @@ public class AnalyzeActivity extends AppCompatActivity {
         if (client == null) {
             client = new VisionServiceRestClient(getString(R.string.subscription_key), getString(R.string.subscription_apiroot));
         }
-        database = AppDatabase.getAppDatabase(this);
+        imageRepository = new ImageRepository(this);
 
         imageView = findViewById(R.id.selectedImage);
         textView = findViewById(R.id.editTextResult);
@@ -161,7 +162,8 @@ public class AnalyzeActivity extends AppCompatActivity {
                         categories.add(tag.name);
                     }
                 }
-                database.imageDAO().insert(new Image(caption, categories, imageUri));
+
+                imageRepository.insert(new Image(caption, categories, imageUri));
             }
             return null;
         }

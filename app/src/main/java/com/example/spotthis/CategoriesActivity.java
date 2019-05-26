@@ -1,5 +1,8 @@
 package com.example.spotthis;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +27,7 @@ import android.widget.TextView;
 
 import com.example.spotthis.Database.AppDatabase;
 import com.example.spotthis.Database.DatabaseUtilityHelper;
+import com.example.spotthis.Database.ImageViewModel;
 import com.example.spotthis.Models.Category;
 import com.example.spotthis.Models.Image;
 import com.example.spotthis.helper.ImageHelper;
@@ -52,6 +57,8 @@ public class CategoriesActivity extends AppCompatActivity {
     private static final int REQUEST_TAKE_PHOTO = 0;
     private static final int REQUEST_SELECT_IMAGE_IN_ALBUM = 1;
 
+    private ImageViewModel imageViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,19 +76,32 @@ public class CategoriesActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
+        imageViewModel.getInserResult().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                if (integer == 1) {
+
+                }
+            };
+        });
+
+
 
         try {
             categories = new CategoryAsyncTask().execute().get();
-            CategoryViewAdapter adapter = new CategoryViewAdapter(categories, this);
+            CategoryViewAdapter adapter = new CategoryViewAdapter(categories, getApplicationContext());
             recyclerView.setAdapter(adapter);
 
-        } catch (InterruptedException e) {
+        } catch (
+                InterruptedException e) {
             e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (
+                ExecutionException e) {
             e.printStackTrace();
         }
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -154,6 +174,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
             return categories;
         }
+
     }
 
     // Set the information panel on screen.
