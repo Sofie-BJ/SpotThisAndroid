@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">SpotThis</string>
+    <string name="subscription_key">b7bf67af99e24f72a9cd804c4ec10140</string>
+    <string name="subscription_apiroot">https://westeurope.api.cognitive.microsoft.com/vision/v1.0"</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_analyze">Analyze Image</string>
+    <string name="title_activity_analyze_domain">Analyze Image In Domain</string>
+    <string name="title_activity_describe">Describe Image</string>
+    <string name="title_activity_recognize">Recognize Text</string>
+    <string name="title_activity_handwriting_recognize">Recognize Handwriting Text</string>
+    <string name="title_activity_thumbnail">Thumbnail Image</string>
+
+    <!-- Select image activity -->
+    <string name="select_an_image">Select an Image</string>
+    <string name="take_photo">Take a Photo</string>
+    <string name="select_image_in_album">From Gallery</string>
+    <string name="camera">Camera</string>
+
 </resources>
