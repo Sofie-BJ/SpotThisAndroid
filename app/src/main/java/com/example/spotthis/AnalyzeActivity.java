@@ -79,7 +79,6 @@ public class AnalyzeActivity extends AppCompatActivity {
 
     private VisionServiceClient client;
 
-
     private AppDatabase database;
 
     @Override
@@ -95,7 +94,8 @@ public class AnalyzeActivity extends AppCompatActivity {
         imageView = findViewById(R.id.selectedImage);
         mEditText = (EditText) findViewById(R.id.editTextResult);
 
-        String uri = getIntent().getStringExtra("URI");
+        Intent intent = getIntent();
+        String uri = intent.getStringExtra("URI");
         doAnalyze(uri);
 
         mImageUri = Uri.parse(uri);

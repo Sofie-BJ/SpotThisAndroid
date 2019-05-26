@@ -1,6 +1,7 @@
 package com.example.spotthis;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -167,9 +168,9 @@ public class CategoriesActivity extends AppCompatActivity {
         Log.d("AnalyzeActivity", "onActivityResult");
 
         if (resultCode == RESULT_OK) {
-            Intent intent = new Intent(this, AnalyzeActivity.class);
+            Intent intent = new Intent(this.getApplicationContext(), AnalyzeActivity.class);
             if (mUriPhotoTaken != null) {
-                intent.putExtra("URI", mUriPhotoTaken);
+                intent.putExtra("URI", mUriPhotoTaken.toString());
             }
             startActivity(intent);
         }
