@@ -13,26 +13,21 @@ import java.util.List;
 public class ImageViewModel extends AndroidViewModel {
 
     private ImageRepository imageRepository;
-    private LiveData<Integer> inserResult;
+    private LiveData<List<Image>> images;
 
 
     public ImageViewModel(@NonNull Application application) {
         super(application);
         imageRepository = new ImageRepository(application);
-        inserResult = imageRepository.getInsertResult();
+        images = imageRepository.getImages();
     }
 
     public void insert(Image image) {
         imageRepository.insert(image);
     }
 
-    public List<Image> getImages() {
-        return imageRepository.getImages();
+    public LiveData<List<Image>> getImages() {
+        return images;
     }
-
-    public LiveData<Integer> getInserResult() {
-        return inserResult;
-    }
-
 
 }

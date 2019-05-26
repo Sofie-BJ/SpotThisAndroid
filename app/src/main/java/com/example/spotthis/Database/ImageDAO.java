@@ -1,5 +1,6 @@
 package com.example.spotthis.Database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -15,6 +16,6 @@ public interface ImageDAO {
     void insert(Image image);
 
     @Query("SELECT * FROM IMAGE")
-    List<Image> getImages();
+    LiveData<List<Image>> getImages();
 
 }

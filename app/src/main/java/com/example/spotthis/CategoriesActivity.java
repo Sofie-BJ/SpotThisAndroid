@@ -41,8 +41,6 @@ public class CategoriesActivity extends AppCompatActivity {
 
     // Flag to indicate which task is to be performed.
 
-    private List<Category> categories;
-    private AppDatabase database;
     private RecyclerView recyclerView;
     private DatabaseUtilityHelper databaseUtilityHelper = new DatabaseUtilityHelper();
 
@@ -56,6 +54,7 @@ public class CategoriesActivity extends AppCompatActivity {
     // Flag to indicate the request of the next task to be performed
     private static final int REQUEST_TAKE_PHOTO = 0;
     private static final int REQUEST_SELECT_IMAGE_IN_ALBUM = 1;
+    private static final int ANALYZED_PICTURE = 2;
 
     private ImageViewModel imageViewModel;
 
@@ -64,42 +63,30 @@ public class CategoriesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
-        database = AppDatabase.getAppDatabase(this);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
+
+        final CategoryViewAdapter adapter = new CategoryViewAdapter(getApplicationContext());
+        recyclerView.setAdapter(adapter);
+
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-
         recyclerView.setLayoutManager(llm);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         imageViewModel = ViewModelProviders.of(this).get(ImageViewModel.class);
-        imageViewModel.getInserResult().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                if (integer == 1) {
 
-                }
-            };
+        imageViewModel.getImages().observe(this, new Observer<List<Image>>() {
+            @Override
+            public void onChanged(@Nullable List<Image> images) {
+                List<Category> categories = databaseUtilityHelper.getCategories(images);
+                adapter.setCategories(categories);
+            }
         });
 
-
-
-        try {
-            categories = new CategoryAsyncTask().execute().get();
-            CategoryViewAdapter adapter = new CategoryViewAdapter(categories, getApplicationContext());
-            recyclerView.setAdapter(adapter);
-
-        } catch (
-                InterruptedException e) {
-            e.printStackTrace();
-        } catch (
-                ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -165,17 +152,19 @@ public class CategoriesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
     private class CategoryAsyncTask extends AsyncTask<Void, Void, List<Category>> {
 
         @Override
         protected List<Category> doInBackground(Void... voids) {
-            List<Image> images = database.imageDAO().getImages();
-            categories = databaseUtilityHelper.getCategories(images);
+            //List<Image> images = database.imageDAO().getImages();
+            //categories = databaseUtilityHelper.getCategories(images);
 
             return categories;
         }
 
     }
+    */
 
     // Set the information panel on screen.
     private void setInfo(String info) {
@@ -188,15 +177,21 @@ public class CategoriesActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("AnalyzeActivity", "onActivityResult");
 
+        if(requestCode == ANALYZED_PICTURE && resultCode == RESULT_OK) {
+            Image image = (Image)data.getSerializableExtra("IMAGE");
+            imageViewModel.insert(image);
+        }
+
         if (resultCode == RESULT_OK) {
             Intent intent = new Intent(this.getApplicationContext(), AnalyzeActivity.class);
             if (mUriPhotoTaken != null) {
                 intent.putExtra("URI", mUriPhotoTaken.toString());
             }
-            startActivity(intent);
+            startActivityForResult(intent,ANALYZED_PICTURE);
         }
 
     }
+
 }
 
 

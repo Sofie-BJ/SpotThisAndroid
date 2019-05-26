@@ -43,16 +43,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /*
     public void ImageFromDB(View view ) throws ExecutionException, InterruptedException {
         imageView.setImageBitmap(new ImageAsyncTask().execute().get());
     }
-
+    */
+    /*
     private class ImageAsyncTask extends AsyncTask<Void,Void,Bitmap> {
+
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
-            List<Image> images = database.imageDAO().getImages();
-            Image image = images.get(0);
+            //List<Image> images = database.imageDAO().getImages();
+            //Image image = images.get(0);
 
             Uri imageUri = Uri.parse(image.getUri());
 
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+    */
 
 
 }

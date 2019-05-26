@@ -76,8 +76,6 @@ public class AnalyzeActivity extends AppCompatActivity {
 
     private VisionServiceClient client;
 
-    private ImageRepository imageRepository;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +84,6 @@ public class AnalyzeActivity extends AppCompatActivity {
         if (client == null) {
             client = new VisionServiceRestClient(getString(R.string.subscription_key), getString(R.string.subscription_apiroot));
         }
-        imageRepository = new ImageRepository(this);
 
         imageView = findViewById(R.id.selectedImage);
         textView = findViewById(R.id.editTextResult);
@@ -162,8 +159,11 @@ public class AnalyzeActivity extends AppCompatActivity {
                         categories.add(tag.name);
                     }
                 }
-
-                imageRepository.insert(new Image(caption, categories, imageUri));
+                Image image = new Image(caption, categories, imageUri);
+                Intent intent = new Intent();
+                intent.putExtra("IMAGE",image);
+                setResult(RESULT_OK,intent);
+                finish();
             }
             return null;
         }

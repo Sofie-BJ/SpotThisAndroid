@@ -43,9 +43,13 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
         }
     }
 
-    CategoryViewAdapter(List<Category> categories, Context context) {
-        this.categories = categories;
+    CategoryViewAdapter(Context context) {
         this.context = context;
+    }
+
+    void setCategories(List<Category> categories){
+        this.categories = categories;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -60,21 +64,24 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final CategoryViewHolder categoryViewHolder, final int i) {
-        categoryViewHolder.categoryName.setText(categories.get(i).getCategoryname());
+        if (categories != null) {
+            categoryViewHolder.categoryName.setText(categories.get(i).getCategoryname());
 
-        categoryViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, CategoryImagesActivity.class);
-                intent.putExtra("CATEGORYNAME", categoryViewHolder.categoryName.getText());
-                List<Image> images = categories.get(i).getCategoryimages();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("IMAGESCATEGORY", (Serializable) images);
-                intent.putExtra("BUNDLE", bundle);
-                context.startActivity(intent);
-            }
-        });
-
+            categoryViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, CategoryImagesActivity.class);
+                    intent.putExtra("CATEGORYNAME", categoryViewHolder.categoryName.getText());
+                    List<Image> images = categories.get(i).getCategoryimages();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("IMAGESCATEGORY", (Serializable) images);
+                    intent.putExtra("BUNDLE", bundle);
+                    context.startActivity(intent);
+                }
+            });
+        } else {
+            categoryViewHolder.categoryName.setText("No categories!");
+        }
     }
 
     @Override
@@ -84,7 +91,10 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        if(categories != null) {
+            return categories.size();
+        }
+        else return 0;
     }
 
 }
