@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.spotthis.Database.AppDatabase;
@@ -84,6 +85,7 @@ public class CategoriesActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<Image> images) {
                 List<Category> categories = databaseUtilityHelper.getCategories(images);
                 adapter.setCategories(categories);
+                Toast.makeText(getApplicationContext(), "Image successfully added!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -152,19 +154,6 @@ public class CategoriesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    private class CategoryAsyncTask extends AsyncTask<Void, Void, List<Category>> {
-
-        @Override
-        protected List<Category> doInBackground(Void... voids) {
-            //List<Image> images = database.imageDAO().getImages();
-            //categories = databaseUtilityHelper.getCategories(images);
-
-            return categories;
-        }
-
-    }
-    */
 
     // Set the information panel on screen.
     private void setInfo(String info) {
@@ -177,18 +166,34 @@ public class CategoriesActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("AnalyzeActivity", "onActivityResult");
 
-        if(requestCode == ANALYZED_PICTURE && resultCode == RESULT_OK) {
-            Image image = (Image)data.getSerializableExtra("IMAGE");
-            imageViewModel.insert(image);
+        switch (requestCode) {
+            case ANALYZED_PICTURE:
+                if (resultCode == RESULT_OK) {
+                    Image image = (Image)data.getSerializableExtra("IMAGE");
+                    imageViewModel.insert(image);
+                    break;
+                }
+
+            case REQUEST_TAKE_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    Intent intent = new Intent(this.getApplicationContext(), AnalyzeActivity.class);
+                    if (mUriPhotoTaken != null) {
+                        intent.putExtra("URI", mUriPhotoTaken.toString());
+                    }
+                    startActivityForResult(intent,ANALYZED_PICTURE);
+                }
+
+            case REQUEST_SELECT_IMAGE_IN_ALBUM:
+                if (resultCode == RESULT_OK) {
+                    Intent intent = new Intent(this.getApplicationContext(), AnalyzeActivity.class);
+                    if (data.getData() != null) {
+                        intent.putExtra("URI", data.getData().toString());
+                    }
+                    startActivityForResult(intent,ANALYZED_PICTURE);
+                }
         }
 
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Intent intent = new Intent(this.getApplicationContext(), AnalyzeActivity.class);
-            if (mUriPhotoTaken != null) {
-                intent.putExtra("URI", mUriPhotoTaken.toString());
-            }
-            startActivityForResult(intent,ANALYZED_PICTURE);
-        }
+
 
     }
 

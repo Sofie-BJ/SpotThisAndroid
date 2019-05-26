@@ -1,12 +1,15 @@
 package com.example.spotthis;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +26,7 @@ public class ImagesCategoryViewAdapter extends RecyclerView.Adapter<ImagesCatego
     public ImagesCategoryViewAdapter(List<Image> images, Context context) {
         this.images = images;
         this.context = context;
+
     }
 
     @Override
@@ -33,9 +37,21 @@ public class ImagesCategoryViewAdapter extends RecyclerView.Adapter<ImagesCatego
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.imageView.setImageURI(Uri.parse(images.get(position).getUri()));
-        holder.textView.setText(images.get(position).getDescription());
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        if (images != null) {
+            holder.imageView.setImageURI(Uri.parse(images.get(position).getUri()));
+            holder.textView.setText(images.get(position).getDescription());
+
+            holder.linearLayoutCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, ImageDetailActivity.class);
+                    intent.putExtra("IMAGE", images.get(position));
+                    context.startActivity(intent);
+                }
+            });
+
+        }
 
     }
 
@@ -44,15 +60,15 @@ public class ImagesCategoryViewAdapter extends RecyclerView.Adapter<ImagesCatego
         return images.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        RelativeLayout relativeLayout;
+        LinearLayout linearLayoutCard;
         ImageView imageView;
         TextView textView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            relativeLayout = itemView.findViewById(R.id.relativeLayout);
+            linearLayoutCard = itemView.findViewById(R.id.linearlayoutCard);
             imageView = itemView.findViewById(R.id.imageView);
             textView = itemView.findViewById(R.id.imagename);
 

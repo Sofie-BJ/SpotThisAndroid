@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ImageDetailActivity"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -21,29 +22,23 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
             android:name=".AnalyzeActivity"
             android:label="@string/title_activity_analyze"
-            android:parentActivityName=".MainActivity" >
-        </activity>
-
+            android:parentActivityName=".MainActivity"></activity>
         <activity
-            android:name="com.example.spotthis.helper.SelectImageActivity"
+            android:name=".helper.SelectImageActivity"
             android:label="@string/select_an_image"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.example.spotthis.CategoryImagesActivity"
+            android:name=".CategoryImagesActivity"
             android:label="Category image" />
-
         <activity
             android:name=".MainActivity"
-            android:label="SpotThis">
-        </activity>
-
+            android:label="SpotThis"></activity>
         <activity
             android:name=".CategoriesActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -53,7 +48,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
