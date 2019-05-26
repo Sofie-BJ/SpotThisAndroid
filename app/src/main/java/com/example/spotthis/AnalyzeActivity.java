@@ -95,13 +95,11 @@ public class AnalyzeActivity extends AppCompatActivity {
         mEditText = (EditText) findViewById(R.id.editTextResult);
 
         Intent intent = getIntent();
-        String uri = intent.getStringExtra("URI");
-        doAnalyze(uri);
+        String uriString = intent.getStringExtra("URI");
+        mImageUri = Uri.parse(uriString);
+        mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(mImageUri, getContentResolver());
+        doAnalyze(uriString);
 
-        mImageUri = Uri.parse(uri);
-
-        mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(
-                mImageUri, getContentResolver());
         if (mBitmap != null) {
             // Show the image on screen.
             imageView.setImageBitmap(mBitmap);
@@ -162,7 +160,7 @@ public class AnalyzeActivity extends AppCompatActivity {
                 caption = analysisResult.description.tags.get(0);
                 publishProgress(caption);
                 for (Tag tag : analysisResult.tags) {
-                    if (tag.confidence > 0.80) {
+                    if (tag.confidence > 0.85) {
                         publishProgress(tag.name);
                         categories.add(tag.name);
                     }
