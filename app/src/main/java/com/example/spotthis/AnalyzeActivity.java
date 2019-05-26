@@ -103,7 +103,7 @@ public class AnalyzeActivity extends AppCompatActivity {
 
 
     public void doAnalyze(String imageuri) {
-        textView.setText("Analyzing...");
+        textView.setText("Analyzing... \n");
 
         try {
             new doRequest(imageuri).execute();
@@ -151,7 +151,12 @@ public class AnalyzeActivity extends AppCompatActivity {
                 List<String> categories = new ArrayList<>();
                 Gson gson = new Gson();
                 AnalysisResult analysisResult = gson.fromJson(result, AnalysisResult.class);
-                caption = analysisResult.description.tags.get(0);
+                if(analysisResult.description.captions != null){
+                    caption = analysisResult.description.captions.get(0).text;
+                } else {
+                    caption = "No description detected";
+                }
+
                 publishProgress(caption);
                 for (Tag tag : analysisResult.tags) {
                     if (tag.confidence > 0.90) {

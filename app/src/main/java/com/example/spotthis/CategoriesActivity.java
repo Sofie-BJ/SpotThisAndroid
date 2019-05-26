@@ -181,6 +181,8 @@ public class CategoriesActivity extends AppCompatActivity {
                         intent.putExtra("URI", mUriPhotoTaken.toString());
                     }
                     startActivityForResult(intent,ANALYZED_PICTURE);
+                    break;
+
                 }
 
             case REQUEST_SELECT_IMAGE_IN_ALBUM:
@@ -190,6 +192,7 @@ public class CategoriesActivity extends AppCompatActivity {
                         intent.putExtra("URI", data.getData().toString());
                     }
                     startActivityForResult(intent,ANALYZED_PICTURE);
+                    break;
                 }
         }
 
