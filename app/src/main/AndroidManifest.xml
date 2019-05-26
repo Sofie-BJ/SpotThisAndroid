@@ -41,7 +41,11 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="SpotThis"
+            android:label="SpotThis">
+        </activity>
+
+        <activity
+            android:name=".CategoriesActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,8 +53,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ImageActivity"></activity>
 
     </application>
 

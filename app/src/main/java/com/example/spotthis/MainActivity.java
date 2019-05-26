@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void categoryView(View view) {
         Intent intent;
-        intent = new Intent(this, com.example.spotthis.ImageActivity.class);
+        intent = new Intent(this, CategoriesActivity.class);
         startActivity(intent);
     }
 

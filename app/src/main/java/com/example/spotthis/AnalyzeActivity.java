@@ -57,6 +57,7 @@ import com.microsoft.projectoxford.vision.contract.Tag;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,14 +66,13 @@ public class AnalyzeActivity extends AppCompatActivity {
     // Flag to indicate which task is to be performed.
     private static final int REQUEST_SELECT_IMAGE = 0;
 
-    // The button to select an image
-    private Button mButtonSelectImage;
-
     // The URI of the image selected to detect.
     private Uri mImageUri;
 
     // The image selected to detect.
     private Bitmap mBitmap;
+
+    private ImageView imageView;
 
     // The edit to show status and result.
     private EditText mEditText;
@@ -92,28 +92,25 @@ public class AnalyzeActivity extends AppCompatActivity {
         }
         database = AppDatabase.getAppDatabase(this);
 
-        mButtonSelectImage = (Button) findViewById(R.id.buttonSelectImage);
+        imageView = findViewById(R.id.selectedImage);
         mEditText = (EditText) findViewById(R.id.editTextResult);
+
+        String uri = getIntent().getStringExtra("URI");
+        doAnalyze(uri);
+
+        mImageUri = Uri.parse(uri);
+
+        mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(
+                mImageUri, getContentResolver());
+        if (mBitmap != null) {
+            // Show the image on screen.
+            imageView.setImageBitmap(mBitmap);
+
+        }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public void doAnalyze(String imageuri) {
-        mButtonSelectImage.setEnabled(false);
         mEditText.setText("Analyzing...");
 
         try {
@@ -123,44 +120,6 @@ public class AnalyzeActivity extends AppCompatActivity {
         }
     }
 
-    // Called when the "Select Image" button is clicked.
-    public void selectImage(View view) {
-        mEditText.setText("");
-
-        Intent intent;
-        intent = new Intent(AnalyzeActivity.this, com.example.spotthis.helper.SelectImageActivity.class);
-        startActivityForResult(intent, REQUEST_SELECT_IMAGE);
-    }
-
-    // Called when image selection is done.
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("AnalyzeActivity", "onActivityResult");
-        switch (requestCode) {
-            case REQUEST_SELECT_IMAGE:
-                if (resultCode == RESULT_OK) {
-                    // If image is selected successfully, set the image URI and bitmap.
-                    mImageUri = data.getData();
-
-                    mBitmap = ImageHelper.loadSizeLimitedBitmapFromUri(
-                            mImageUri, getContentResolver());
-                    if (mBitmap != null) {
-                        // Show the image on screen.
-                        ImageView imageView = (ImageView) findViewById(R.id.selectedImage);
-                        imageView.setImageBitmap(mBitmap);
-
-                        // Add detection log.
-                        Log.d("AnalyzeActivity", "Image: " + mImageUri + " resized to " + mBitmap.getWidth()
-                                + "x" + mBitmap.getHeight());
-
-                        doAnalyze(mImageUri.toString());
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-    }
 
 
     private class doRequest extends AsyncTask<String, String, String> {
