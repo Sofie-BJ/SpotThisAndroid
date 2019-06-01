@@ -96,8 +96,8 @@ public class AnalyzeActivity extends AppCompatActivity {
 
         if (mBitmap != null) {
             // Show the image on screen.
-            imageView.setImageBitmap(mBitmap);
-
+            //imageView.setImageBitmap(mBitmap);
+            imageView.setImageURI(mImageUri);
         }
     }
 
