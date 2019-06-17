@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SpotThis</string>
-    <string name="subscription_key">b7bf67af99e24f72a9cd804c4ec10140</string>
+    <string name="subscription_key">2a614bfde024462fbba64fc6c5d3c171</string>
     <string name="subscription_apiroot">https://westeurope.api.cognitive.microsoft.com/vision/v1.0"</string>
     <string name="title_activity_main">MainActivity</string>
 
